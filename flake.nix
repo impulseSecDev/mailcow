@@ -14,9 +14,9 @@
       system = "x86_64-linux";
       modules = [
         ./hardware-configuration.nix
-        sops-nix.nixosModules.sops
-        disko.nixosModules.disko
-        ./disko-config.nix
+        # sops-nix.nixosModules.sops
+        # disko.nixosModules.disko
+        # ./disko-config.nix
         ./networking.nix
         #./nginx.nix
         #./fail2ban.nix
@@ -81,25 +81,25 @@
             };
           };
 
-          # Add network drivers for the initrd to "see" the internet/LAN
-          boot.initrd.availableKernelModules = [ 
-            "e1000e" 
-          ];
+          # # Add network drivers for the initrd to "see" the internet/LAN
+          # boot.initrd.availableKernelModules = [ 
+          #   "e1000e" 
+          # ];
 
-          boot.kernelParams = [ 
-            # Format: ip=<client-ip>:<server-ip>:<gateway-ip>:<netmask>:<hostname>:<device>:<autoconf>
-            # leave server-ip and hostname blank (::) and let the kernel pick the first interface (::::)
-            "ip=192.168.1.209::192.168.1.1:255.255.255.0::::none" 
+          # boot.kernelParams = [ 
+          #   # Format: ip=<client-ip>:<server-ip>:<gateway-ip>:<netmask>:<hostname>:<device>:<autoconf>
+          #   # leave server-ip and hostname blank (::) and let the kernel pick the first interface (::::)
+          #   "ip=192.168.1.209::192.168.1.1:255.255.255.0::::none" 
           ];
 
           nix.settings.trusted-users = [ "root" "tim" ];
 
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-          sops = {
-            defaultSopsFile = ./secrets/secrets.yaml;
-            age.keyFile = "/var/lib/sops-nix/keys.txt";
-          }; 
+          # sops = {
+          #   defaultSopsFile = ./secrets/secrets.yaml;
+          #   age.keyFile = "/var/lib/sops-nix/keys.txt";
+          # }; 
 
           system.stateVersion = "26.05";
         })

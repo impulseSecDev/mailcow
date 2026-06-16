@@ -3,7 +3,7 @@
   disko.devices = {
     disk = {
       main = {
-        device = "/dev/disk/by-id/nvme-PCIe_SSD_19112851200943";
+        device = "/dev/disk/by-id/ata-256GB_SSD_CM46BBH0504939";
         type = "disk";
         content = {
           type = "gpt";
