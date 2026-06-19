@@ -59,38 +59,14 @@
           };
 
           services.openssh = {
-            enable = false;
+            enable = true;
             ports = [ 22 ];
             settings = {
-              PasswordAuthentication = false;
+              PasswordAuthentication = true;
               KbdInteractiveAuthentication = false;
               PermitRootLogin = "no";
             };
           };
-
-          boot.initrd.network = {
-            enable = true;
-            ssh = {
-              enable = true;
-              port = 2222; # Use 2222 to distinguish from the main OS SSH
-              authorizedKeys = [
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINw1yOJY+eSj4TWgNUbM2QNR49PWyRp+6QkT3LNboWvM raspberry pi-cloud-key" # Your public key
-              ];
-              hostKeys = [ "/etc/secrets/initrd_ssh_host_ed25519_key" ];
-              shell = "/bin/cryptsetup-askpass";
-            };
-          };
-
-          # # Add network drivers for the initrd to "see" the internet/LAN
-          # boot.initrd.availableKernelModules = [ 
-          #   "e1000e" 
-          # ];
-
-          # boot.kernelParams = [ 
-          #   # Format: ip=<client-ip>:<server-ip>:<gateway-ip>:<netmask>:<hostname>:<device>:<autoconf>
-          #   # leave server-ip and hostname blank (::) and let the kernel pick the first interface (::::)
-          #   "ip=192.168.1.209::192.168.1.1:255.255.255.0::::none" 
-          ];
 
           nix.settings.trusted-users = [ "root" "tim" ];
 
