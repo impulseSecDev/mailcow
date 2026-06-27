@@ -10,13 +10,13 @@
   };
 
   outputs = { self, nixpkgs, nixos-hardware, disko, sops-nix, ... }: {
-    nixosConfigurations.cloud = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.mailbox = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./hardware-configuration.nix
-        # sops-nix.nixosModules.sops
-        # disko.nixosModules.disko
-        # ./disko-config.nix
+        #./hardware-configuration.nix
+        sops-nix.nixosModules.sops
+        disko.nixosModules.disko
+        ./disko-config.nix
         ./networking.nix
         #./nginx.nix
         #./fail2ban.nix
@@ -37,18 +37,18 @@
             size = 8*1024;
           }];
 
-          networking.hostName = "cloud";
+          networking.hostName = "mailbox";
 
           time.timeZone = "UTC";
 
           programs.neovim.enable = true;
           
-          services.tailscale = {
-            enable = true;
-            extraUpFlags = [ "--ssh=true" "--login-server=https://tails.loranjennings.com" ];
-          };
+          # services.tailscale = {
+          #   enable = true;
+          # };
 
           users.users.tim = {
+            initialPassword = "password";
             isNormalUser = true;
             extraGroups = [ "wheel" ];
             packages = with pkgs; [
@@ -64,7 +64,7 @@
             settings = {
               PasswordAuthentication = true;
               KbdInteractiveAuthentication = false;
-              PermitRootLogin = "no";
+              PermitRootLogin = "yes";
             };
           };
 
