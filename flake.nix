@@ -37,9 +37,19 @@
           boot.supportedFilesystems = lib.mkForce [ "vfat" "fat32" "exfat" "ext4" "btrfs" ];
           boot.loader.systemd-boot.enable = lib.mkForce false;
 
-            boot.lanzaboote = {
+          boot.lanzaboote = {
+            enable = true;
+            pkiBundle = "/var/lib/sbctl";
+            autoGenerateKeys.enable = true;
+            autoEnrollKeys = {
               enable = true;
-              pkiBundle = "/var/lib/sbctl";
+              # Automatically reboot to enroll the keys in the firmware
+              autoReboot = true;
+            };
+          };
+
+          boot.initrd.luks.devices."cryptroot" = {
+            device = "/dev/disk/by-uuid/d318ac2d-1c14-4ed3-97fe-5b9c2b6bba9c";
           };
 
           swapDevices = [{
