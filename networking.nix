@@ -5,13 +5,8 @@
   
    networking.networkmanager.enable = true;
    networking = {
-     #useDHCP = false;
      interfaces.enp2s0 = {
        useDHCP = true;
-       # ipv4.addresses = {
-       #   address = "10.0.0.168";
-       #   prefixLength = 24;
-       # };  
      };
    };
 

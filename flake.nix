@@ -43,9 +43,9 @@
 
           programs.neovim.enable = true;
           
-          # services.tailscale = {
-          #   enable = true;
-          # };
+          services.tailscale = {
+            enable = true;
+          };
 
           users.users.tim = {
             initialPassword = "password";
@@ -59,12 +59,11 @@
           };
 
           services.openssh = {
-            enable = true;
+            enable = false;
             ports = [ 22 ];
             settings = {
-              PasswordAuthentication = true;
-              KbdInteractiveAuthentication = false;
-              PermitRootLogin = "yes";
+              PasswordAuthentication = false;
+              PermitRootLogin = "no";
             };
           };
 
@@ -72,10 +71,10 @@
 
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-          # sops = {
-          #   defaultSopsFile = ./secrets/secrets.yaml;
-          #   age.keyFile = "/var/lib/sops-nix/keys.txt";
-          # }; 
+          sops = {
+            defaultSopsFile = ./secrets/secrets.yaml;
+            age.keyFile = "/var/lib/sops-nix/keys.txt";
+          }; 
 
           system.stateVersion = "26.05";
         })
