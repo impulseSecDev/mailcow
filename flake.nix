@@ -7,15 +7,22 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.1.0";
+
+      # Optional but recommended to limit the size of your system closure.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, disko, sops-nix, ... }: {
+  outputs = { self, nixpkgs, nixos-hardware, disko, sops-nix, lanzaboote }: {
     nixosConfigurations.mailbox = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         #./hardware-configuration.nix
         sops-nix.nixosModules.sops
         disko.nixosModules.disko
+        lanzaboote.nixosModules.lanzaboote
         ./disko-config.nix
         ./networking.nix
         #./nginx.nix
@@ -28,9 +35,12 @@
         ({ config, pkgs, lib, ... }: {
           boot.kernelPackages = pkgs.linuxPackages; 
           boot.supportedFilesystems = lib.mkForce [ "vfat" "fat32" "exfat" "ext4" "btrfs" ];
+          boot.loader.systemd-boot.enable = lib.mkForce false;
 
-          boot.loader.systemd-boot.enable = true;
-          boot.loader.efi.canTouchEfiVariables = true;
+            boot.lanzaboote = {
+              enable = true;
+              pkiBundle = "/var/lib/sbctl";
+          };
 
           swapDevices = [{
             device = "/var/lib/swapfile";
@@ -55,6 +65,7 @@
               age
               btop
               tmux
+              sbctl
             ];
           };
 
