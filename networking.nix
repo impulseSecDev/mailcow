@@ -10,7 +10,7 @@
      };
    };
 
-  systemd.services.init-immich-network = {
+  systemd.services.init-mailcow-network = {
     description = "Create Docker network for mailcow isolation";
     after = [ "network.target" "docker.service" ];
     wantedBy = [ "multi-user.target" ];
