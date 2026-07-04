@@ -25,9 +25,8 @@
         lanzaboote.nixosModules.lanzaboote
         ./disko-config.nix
         ./networking.nix
-        #./nginx.nix
         #./fail2ban.nix
-        #./wireguard.nix
+        ./wireguard.nix
         #./suricata.nix
         #./fluent-bit.nix
         #./wazuh-agent.nix
