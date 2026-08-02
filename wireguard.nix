@@ -20,7 +20,7 @@
       [Interface]
       PrivateKey = ${config.sops.placeholder."wg0_private_key"}
       Address = 20.20.20.100/24
-      ListenPort = 62088
+      ListenPort = 52083
 
       [Peer]
       # Wazuh VM

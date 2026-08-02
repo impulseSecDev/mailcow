@@ -19,7 +19,7 @@
     nixosConfigurations.mailbox = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        #./hardware-configuration.nix
+        ./hardware-configuration.nix
         sops-nix.nixosModules.sops
         disko.nixosModules.disko
         lanzaboote.nixosModules.lanzaboote
